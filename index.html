@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Valentine ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #ffe6e6;
+            --card-color: #ffffff;
+            --primary: #ff4d6d;
+            --secondary: #d90429;
+            --yes-bg: #4cc9f0; /* Friendly Blue */
+            --no-bg: #ff4d6d; /* Soft Red */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(#ffb3c1 2px, transparent 2px), 
+                radial-gradient(#ffb3c1 2px, transparent 2px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            background: var(--card-color);
+            width: 90%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container {
+            height: 200px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-container img {
+            max-height: 100%;
+            max-width: 100%;
+            border-radius: 15px;
+            object-fit: contain;
+            transition: opacity 0.3s ease; 
+        }
+
+        h1 {
+            font-family: 'Indie Flower', cursive;
+            color: var(--secondary);
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
+            line-height: 1.2;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            min-height: 60px; /* Keeps layout stable */
+        }
+
+        .btn-box {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .yes-btn {
+            background-color: var(--yes-bg);
+            color: white;
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.05);
+            background-color: #4895ef;
+        }
+
+        .no-btn {
+            background-color: var(--no-bg);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+            position: relative; 
+        }
+
+        .no-btn:hover {
+            transform: scale(1.05);
+            background-color: #d90429;
+        }
+
+        /* Success Screen */
+        .hidden { display: none; }
+        .fade-in { animation: fadeIn 0.8s ease forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container fade-in" id="main-card">
+        <div class="image-container">
+            <img id="main-image" src="1.jpg" alt="Cute Bear">
+        </div>
+        
+        <h1 id="title">Will you be my Valentine?</h1>
+        <p id="description">I promise to give you the bigger half of the cake. 🍰</p>
+
+        <div class="btn-box">
+            <button class="yes-btn" onclick="handleYes()">Yes</button>
+            <button class="no-btn" id="no-btn" onclick="handleNo()">No</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="success-card">
+        <div class="image-container">
+            <img src="6.jpg" alt="Happy Cat">
+        </div>
+        <h1>Yayyyyyyyyy! ❤️</h1>
+        <p>Mujhe pata tha maan jaaogi <br> Love you 😉</p>
+    </div>
+
+    <script>
+        /* --- THE STORY LINE ---
+           I updated these to be more polite, playful, and teasing.
+        */
+        const pages = [
+            {
+                // Stage 0: Sweet and simple
+                image: "1.jpg",
+                title: "Will you be my Valentine?",
+                desc: "I promise to give you the bigger half of the cake. 🍰",
+                yesBtn: "Yes!",
+                noBtn: "No"
+            },
+            {
+                // Stage 1: Gentle correction
+                image: "3.jpg",
+                title: "Wait, think about it!",
+                desc: "Are you sure? I make really good playlists. 🎶",
+                yesBtn: "Okay, Yes!",
+                noBtn: "Still No"
+            },
+            {
+                // Stage 2: Playful bargaining
+                image: "4.jpg",
+                title: "Are you really sure?",
+                desc: "I'll be verrrryy sad",
+                yesBtn: "Deal! Yes",
+                noBtn: "Nope"
+            },
+            {
+                // Stage 3: Cute begging (not desperate)
+                image: "5.jpg",
+                title: "Pretty please?",
+                desc: "With a cherry on top?",
+                yesBtn: "Fine, Yes",
+                noBtn: "No way"
+            },
+            {
+                // Stage 4: The playful trap
+                image: "7.jpg",
+                title: "Okay, I'm not giving up!",
+                desc: "You leave me no choice... I'm making this button very hard to catch! 🏃‍♂️",
+                yesBtn: "You win, YES! ❤️",
+                noBtn: "Catch me!"
+            }
+        ];
+
+        let currentPage = 0;
+        const mainImage = document.getElementById('main-image');
+        const title = document.getElementById('title');
+        const desc = document.getElementById('description');
+        const yesBtnElement = document.querySelector('.yes-btn');
+        const noBtnElement = document.querySelector('.no-btn');
+
+        function handleNo() {
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                updatePage(pages[currentPage]);
+            } 
+            
+            if (currentPage === pages.length - 1) {
+                initDodgeLogic();
+            }
+        }
+
+        function updatePage(data) {
+            mainImage.style.opacity = 0;
+            
+            setTimeout(() => {
+                mainImage.src = data.image;
+                title.innerText = data.title;
+                desc.innerText = data.desc;
+                yesBtnElement.innerText = data.yesBtn;
+                noBtnElement.innerText = data.noBtn;
+                mainImage.style.opacity = 1;
+            }, 300);
+        }
+
+        function initDodgeLogic() {
+            noBtnElement.addEventListener('mouseover', moveButton);
+            noBtnElement.addEventListener('click', moveButton); 
+        }
+
+        function moveButton() {
+            // Add extra margin so it doesn't clip off screen
+            const x = Math.random() * (window.innerWidth - noBtnElement.offsetWidth - 100);
+            const y = Math.random() * (window.innerHeight - noBtnElement.offsetHeight - 100);
+            
+            // Ensure positive coordinates
+            const finalX = Math.max(10, x);
+            const finalY = Math.max(10, y);
+
+            noBtnElement.style.position = 'fixed';
+            noBtnElement.style.left = `${finalX}px`;
+            noBtnElement.style.top = `${finalY}px`;
+        }
+
+        function handleYes() {
+            const mainCard = document.getElementById('main-card');
+            const successCard = document.getElementById('success-card');
+
+            mainCard.classList.add('hidden');
+            successCard.classList.remove('hidden');
+            successCard.classList.add('fade-in');
+
+            // Celebration Confetti
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            setInterval(() => {
+                confetti({
+                    particleCount: 20,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff4d6d', '#ffb3c1']
+                });
+                confetti({
+                    particleCount: 20,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff4d6d', '#ffb3c1']
+                });
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
