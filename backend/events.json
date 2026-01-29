@@ -1,0 +1,50 @@
+[
+  {
+    "timestamp": "2026-01-29T06:08:39.029Z",
+    "action": "No",
+    "step": 0,
+    "stepTitle": "Will you be my Valentine?"
+  },
+  {
+    "timestamp": "2026-01-29T06:08:41.431Z",
+    "action": "No",
+    "step": 0,
+    "stepTitle": "Will you be my Valentine?"
+  },
+  {
+    "timestamp": "2026-01-29T06:08:49.802Z",
+    "action": "No",
+    "step": 0,
+    "stepTitle": "Will you be my Valentine?"
+  },
+  {
+    "timestamp": "2026-01-29T06:13:13.492Z",
+    "action": "No",
+    "step": 0,
+    "stepTitle": "Will you be my Valentine?"
+  },
+  {
+    "timestamp": "2026-01-29T06:14:01.306Z",
+    "action": "No",
+    "step": 1,
+    "stepTitle": "Wait, think about it!"
+  },
+  {
+    "timestamp": "2026-01-29T06:14:02.301Z",
+    "action": "No",
+    "step": 2,
+    "stepTitle": "Are you really sure?"
+  },
+  {
+    "timestamp": "2026-01-29T06:14:03.237Z",
+    "action": "No",
+    "step": 3,
+    "stepTitle": "Pretty please?"
+  },
+  {
+    "timestamp": "2026-01-29T06:14:06.371Z",
+    "action": "Yes",
+    "step": 4,
+    "stepTitle": "Okay, I'm not giving up!"
+  }
+]
