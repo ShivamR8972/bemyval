@@ -175,7 +175,7 @@
             const currentTitle = pages[currentPage].title;
             
             // Send data to backend using "fire and forget" (don't wait for response)
-            fetch('http://localhost:3000/api/log', {
+            fetch('https://bemyval-qxza.onrender.com/api/log', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
